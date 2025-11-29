@@ -1,3 +1,4 @@
+import { currentUser } from "@clerk/nextjs/server";
 import HeaderMenu from "../NavComponents/Header/Header";
 import LoginButton from "../NavComponents/LoginButton/LoginButton";
 import Logo from "../NavComponents/logo/Logo";
@@ -6,10 +7,12 @@ import CartIcon from "../NavComponents/SearchBar/CartIcon";
 import FavoriteIcon from "../NavComponents/SearchBar/FavoriteIcon";
 import SearchBar from "../NavComponents/SearchBar/SearchBar";
 import Container from "./Container";
+import { ClerkLoaded, SignedIn, UserButton } from "@clerk/nextjs";
 
-export default function Navbar() {
+const Navbar = async () => {
+  const user = await currentUser();
   return (
-    <header className="bg-white text-lightColor border-b border-black/20 py-5">
+    <header className="bg-white text-lightColor py-5">
       <Container className="flex justify-between items-center">
         {/* logo step-1 */}
         <div className="w-auto md:1/3 flex items-center justify-start gap-2.5 md:gap-0">
@@ -23,9 +26,16 @@ export default function Navbar() {
           <SearchBar />
           <CartIcon />
           <FavoriteIcon />
-          <LoginButton />
+          <ClerkLoaded>
+            <SignedIn>
+              <UserButton />
+            </SignedIn>
+            {!user && <LoginButton />}
+          </ClerkLoaded>
         </div>
       </Container>
     </header>
   );
-}
+};
+
+export default Navbar;

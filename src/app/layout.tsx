@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/Shared/Navbar";
 import Footer from "@/components/Shared/Footer";
-
+import { ClerkProvider } from "@clerk/nextjs";
 export const metadata: Metadata = {
   title: {
     template: "%s |ShopSphere BD",
@@ -18,12 +18,16 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en">
-      <body>
-        <Navbar />
-        {children}
-        <Footer />
-      </body>
-    </html>
+    <ClerkProvider>
+      <html lang="en">
+        <body>
+          <div className="flex flex-col min-h-screen">
+            <Navbar />
+            <main className="flex-1"> {children}</main>
+          </div>
+          <Footer />
+        </body>
+      </html>
+    </ClerkProvider>
   );
 }
