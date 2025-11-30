@@ -1,4 +1,5 @@
 import { cn } from "@/lib/utils";
+import Link from "next/link";
 
 const Logo = ({
   className,
@@ -8,10 +9,10 @@ const Logo = ({
   spanDesign?: string;
 }) => {
   return (
-    <div>
+    <Link href={"/"} className="inline-flex">
       <h2
         className={cn(
-          "text-2xl text-shop_dark_green cursor-pointer font-black hoverEffect group tracking-wider font-sans uppercase hover:text-shop_light_green",
+          "text-2xl text-shop_dark_green cursor-pointer font-black hoverEffect group tracking-wider uppercase hover:text-shop_light_green",
           className
         )}
       >
@@ -25,7 +26,7 @@ const Logo = ({
           Sphere
         </span>
       </h2>
-    </div>
+    </Link>
   );
 };
 
